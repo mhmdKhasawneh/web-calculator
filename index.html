@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+</head>
+<body>
+    <form onsubmit="getResult1(First.value, Second.value); return false;">
+        <input type="number" placeholder="First number" name="First" id="first" step="any">
+        <button type="button" id="op" onclick="toggle()">ADD</button>
+        <input type="number" placeholder="Second number" name="Second" id="second" step="any">
+        <input type="submit" value="Calculate" id="submitBtn">
+    </form>
+
+    <script>
+        function getResult1(firstNum,secondNum){
+            (async() => {
+                await fetch("http://localhost:8000/calculate",{
+                mode:"cors",
+                method: "POST",
+                headers:{
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    first: +firstNum,
+                    second: +secondNum,
+                    operation: document.getElementById("op").textContent
+                })
+            })
+            .then(resp =>{
+                return resp.json()
+            })
+            .then(showAns => {
+                window.alert(showAns["answer"])
+            })
+            .catch(error=>{
+                window.alert(error)
+            })
+            })();
+        }
+
+        function toggle(){
+           var btnText = document.getElementById("op").textContent
+           if(btnText == 'ADD'){
+               document.getElementById("op").textContent = 'SUB'
+           }
+           else if(btnText == 'SUB'){
+            document.getElementById("op").textContent = 'MUL'
+           }
+           else if(btnText == 'MUL'){
+            document.getElementById("op").textContent = 'DIV'
+           }
+           else if(btnText == 'DIV'){
+            document.getElementById("op").textContent = 'ADD'
+           }
+        }
+    </script>
+</body>
+</html>
