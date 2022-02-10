@@ -59,19 +59,16 @@
             })();
         }
 
+        const operation = ["ADD","SUB","MUL","DIV"]
+        var pos = 0
         function toggle(){
            var btnText = document.getElementById("op").textContent
-           if(btnText == 'ADD'){
-               document.getElementById("op").textContent = 'SUB'
+           if(btnText != "DIV"){
+               document.getElementById("op").textContent = operation[++pos]
            }
-           else if(btnText == 'SUB'){
-            document.getElementById("op").textContent = 'MUL'
-           }
-           else if(btnText == 'MUL'){
-            document.getElementById("op").textContent = 'DIV'
-           }
-           else if(btnText == 'DIV'){
-            document.getElementById("op").textContent = 'ADD'
+           else{
+               pos = 0;
+               document.getElementById("op").textContent = operation[pos]
            }
         }
     </script>

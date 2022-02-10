@@ -27,13 +27,14 @@ func calculate(rw http.ResponseWriter, r *http.Request) {
 	var numbers Number
 	_ = json.NewDecoder(r.Body).Decode(&numbers)
 	var answer float64
-	if numbers.Operation == "ADD" {
+	switch numbers.Operation {
+	case "ADD":
 		answer = numbers.First + numbers.Second
-	} else if numbers.Operation == "SUB" {
+	case "SUB":
 		answer = numbers.First - numbers.Second
-	} else if numbers.Operation == "MUL" {
+	case "MUL":
 		answer = numbers.First * numbers.Second
-	} else if numbers.Operation == "DIV" {
+	case "DIV":
 		if numbers.Second == 0 {
 			divZero := Err{Reply: "Can't divide by zero :("}
 			_ = json.NewEncoder(rw).Encode(divZero)
