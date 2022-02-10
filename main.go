@@ -18,6 +18,10 @@ type Answer struct {
 	Reply float64 `json:"answer"`
 }
 
+type Err struct {
+	Reply string `json:"answer"`
+}
+
 func calculate(rw http.ResponseWriter, r *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 	var numbers Number
@@ -30,6 +34,11 @@ func calculate(rw http.ResponseWriter, r *http.Request) {
 	} else if numbers.Operation == "MUL" {
 		answer = numbers.First * numbers.Second
 	} else if numbers.Operation == "DIV" {
+		if numbers.Second == 0 {
+			divZero := Err{Reply: "Can't divide by zero :("}
+			_ = json.NewEncoder(rw).Encode(divZero)
+			return
+		}
 		answer = numbers.First / numbers.Second
 	}
 	answerJson := Answer{Reply: answer}

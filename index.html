@@ -3,14 +3,34 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
+    <style>
+       body{
+           background-color: antiquewhite;
+       }
+       #center {
+           position:absolute;
+           top: 40%;
+           width:95%;
+       }
+       #frm{
+        margin: auto;
+        text-align:center;
+       }
+       button,input{
+           font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+       }
+    </style>
 </head>
 <body>
-    <form onsubmit="getResult1(First.value, Second.value); return false;">
+    <div id="center">
+    <form id="frm" onsubmit="getResult1(First.value, Second.value); return false;">
         <input type="number" placeholder="First number" name="First" id="first" step="any">
         <button type="button" id="op" onclick="toggle()">ADD</button>
         <input type="number" placeholder="Second number" name="Second" id="second" step="any">
-        <input type="submit" value="Calculate" id="submitBtn">
+        <input type="submit" value="Calculate" id="submitBtn"><br><br>
+        <button type="button" style="width:28%;" id="ans">RESULT HERE</button>
     </form>
+    </div>
 
     <script>
         function getResult1(firstNum,secondNum){
@@ -31,7 +51,7 @@
                 return resp.json()
             })
             .then(showAns => {
-                window.alert(showAns["answer"])
+                document.getElementById('ans').textContent = showAns["answer"]
             })
             .catch(error=>{
                 window.alert(error)
