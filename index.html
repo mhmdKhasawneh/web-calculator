@@ -59,17 +59,11 @@
             })();
         }
 
-        const operation = ["ADD","SUB","MUL","DIV"]
+        const operation = ["ADD","SUB","MUL","DIV","REM"]
         var pos = 0
         function toggle(){
            var btnText = document.getElementById("op").textContent
-           if(btnText != "DIV"){
-               document.getElementById("op").textContent = operation[++pos]
-           }
-           else{
-               pos = 0;
-               document.getElementById("op").textContent = operation[pos]
-           }
+           document.getElementById("op").textContent = operation[++pos % 5]
         }
     </script>
 </body>

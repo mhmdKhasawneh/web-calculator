@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"log"
+	"math"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -41,6 +42,13 @@ func calculate(rw http.ResponseWriter, r *http.Request) {
 			return
 		}
 		answer = numbers.First / numbers.Second
+	case "REM":
+		if numbers.Second == 0 {
+			divZero := Err{Reply: "Can't divide by zero :("}
+			_ = json.NewEncoder(rw).Encode(divZero)
+			return
+		}
+		answer = math.Mod(numbers.First, numbers.Second)
 	}
 	answerJson := Answer{Reply: answer}
 	_ = json.NewEncoder(rw).Encode(answerJson)
